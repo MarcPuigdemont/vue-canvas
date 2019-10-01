@@ -10,7 +10,7 @@ const mockItem = {
   model: { text: 'This is a text' },
 };
 
-describe('CanvasItem Component', () => {
+describe('CanvasItemText Component', () => {
   it('renders properly', () => {
     const wrapper = shallowMount(CanvasItemText, {
       propsData: {

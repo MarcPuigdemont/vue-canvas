@@ -10,7 +10,7 @@ const mockItem = {
   model: { url: 'http://localhost:8000/images/uploads-1462948453043.png' },
 };
 
-describe('CanvasItem Component', () => {
+describe('CanvasItemImage Component', () => {
   it('computes the style properly', () => {
     const wrapper = shallowMount(CanvasItemImage, {
       propsData: {
