@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Observable } from 'rxjs';
+import { IItem } from '@/types/interfaces';
 
 const imageService = (() => {
   let imageSubscriber: any;
@@ -62,13 +63,19 @@ const itemService = (() => {
       model,
     };
     itemSubscriber.next(item);
+    axios.post('http://localhost:8000/item', item);
   };
+  const updateItem = (index: number, item: IItem) => {
+    console.log({ index, item });
+    axios.put('http://localhost:8000/item', { index, item });
+  }
   return {
     subscribe: observable$.subscribe.bind(observable$),
     unsubscribe: () => {
       // According to rxjs documentation, unsubscribe method exists, but here it appears not to
     },
     addItem,
+    updateItem,
   };
 })();
 

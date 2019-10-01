@@ -102,6 +102,11 @@ export default Vue.extend({
     },
     stopDrag() {
       this.dragging = false;
+      // Update item position on server
+      if (this.selectedItem !== null) {
+        const index = this.items.indexOf(this.selectedItem);
+        itemService.updateItem(index, this.selectedItem);
+      }
     },
     doDrag(event: MouseEvent) {
       if (this.selectedItem && this.dragging) {

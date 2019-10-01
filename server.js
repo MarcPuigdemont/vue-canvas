@@ -1,5 +1,6 @@
 'use strict';
 
+var bodyParser = require('body-parser');
 const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
@@ -10,6 +11,7 @@ app.use(cors);
 app.options('*', cors);
 
 app.use(express.static('./'));
+app.use(bodyParser.json());
 
 // define file name and destination to save
 let storage = multer.diskStorage({
@@ -72,7 +74,7 @@ app.get('/images', (req, res) => {
 
 const item = (x, y, w, h, type, model) => ({ x, y, w, h, type, model });
 const url = url => `http://localhost:8000/images/${url}`;
-const defaultItems = [
+const items = [
   item(10, 10, 200, 40, 'TEXT', { text: 'This is a text' }),
   item(30, 60, 120, 100, 'IMAGE', { url: url('uploads-1462948453043.png') }),
   item(100, 200, 100, 60, 'TEXT', { text: 'This is another text' }),
@@ -80,7 +82,19 @@ const defaultItems = [
 ];
 
 app.get('/items', (req, res) => {
-  res.json(defaultItems);
+  res.json(items);
+});
+
+app.post('/item', (req, res) => {
+  items.push(req.body);
+  res.sendStatus(200);
+});
+
+app.put('/item', (req, res) => {
+  const { index, item } = req.body;
+  console.log({ index, item }, items);
+  items[index] = item;
+  res.sendStatus(200);
 });
 
 // general route # Modified to point to frontend instead of static file
