@@ -2,18 +2,37 @@
   "name": "create-editor",
   "version": "0.0.1",
   "description": "package for js candidate test",
-  "main": "index.js",
+  "main": "src/main.ts",
   "scripts": {
-    "start": "nodemon server.js"
+    "start-server": "nodemon server.js",
+    "start-client": "vue-cli-service serve",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "vue-cli-service test:unit"
   },
   "author": "jun",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^4.3.1",
+    "core-js": "^2.6.5",
     "express": "^4.13.4",
     "jquery": "^2.2.3",
     "junk": "^1.0.2",
     "multer": "^1.1.0",
-    "nodemon": "^1.9.1"
+    "nodemon": "^1.9.1",
+    "rxjs": "^6.5.2",
+    "vue": "^2.6.10"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/jest": "^23.1.4",
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-e2e-cypress": "^3.11.0",
+    "@vue/cli-plugin-typescript": "^3.11.0",
+    "@vue/cli-plugin-unit-jest": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-core": "7.0.0-bridge.0",
+    "ts-jest": "^23.0.0",
+    "typescript": "^3.4.3",
+    "vue-template-compiler": "^2.6.10"
+  }
 }
