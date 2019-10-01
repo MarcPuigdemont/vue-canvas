@@ -3,7 +3,7 @@
     <h4>Images</h4>
     <ul class="list-unstyled">
       <!-- List of images here -->
-      <li v-for="(image, index) in images" :key="index">
+      <li v-for="(image, index) in images" :key="index" @click="addImageToCanvas(image)">
         <img :src="image" class="img-rounded" />
       </li>
     </ul>
@@ -11,19 +11,37 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import axios from 'axios';
+
+import { imageService, itemService } from '../utils/services';
+
+interface IImageListData {
+  images: string[];
+}
 
 export default Vue.extend({
   name: 'ImageList',
   data() {
-    return {
+    const data: IImageListData = {
       images: [],
     };
+    return data;
   },
   mounted() {
-    axios.get('http://localhost:8000/images').then((result) => {
-      this.images = result.data;
+    imageService.subscribe({
+      next: (image: string) => this.images.push(image),
+      error: (error: any) => {
+        // tslint:disable-next-line
+        console.error('Error getting next image', error);
+      },
     });
+  },
+  beforeDestroy() {
+    imageService.unsubscribe();
+  },
+  methods: {
+    addImageToCanvas(image: string) {
+      itemService.addItem('IMAGE', image);
+    },
   },
 });
 </script>

@@ -13,10 +13,11 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import axios from 'axios';
 
 import { IItem, IMouseEvent, IPoint, MouseButton } from '../types/interfaces';
 import CanvasItem from './CanvasItem.vue';
+
+import { itemService } from '../utils/services';
 
 interface ICanvasData {
   items: IItem[];
@@ -45,13 +46,18 @@ export default Vue.extend({
     return data;
   },
   mounted() {
-    axios.get('http://localhost:8000/items').then((result) => {
-      this.items = result.data;
+    itemService.subscribe({
+      next: (item: IItem) => this.items.push(item),
+      error: (error: any) => {
+        // tslint:disable-next-line
+        console.error('Error getting next image', error);
+      },
     });
     document.addEventListener('mouseup', this.stopDrag);
     document.addEventListener('mousemove', this.doDrag);
   },
   beforeDestroy() {
+    itemService.unsubscribe();
     document.removeEventListener('mouseup', this.stopDrag);
     document.removeEventListener('mousemove', this.doDrag);
   },

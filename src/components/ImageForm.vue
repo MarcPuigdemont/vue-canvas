@@ -10,6 +10,8 @@
 import Vue from 'vue';
 import axios from 'axios';
 
+import { imageService } from '../utils/services';
+
 interface IImageFormData {
   file: Blob | null;
 }
@@ -33,17 +35,7 @@ export default Vue.extend({
       if (this.file === null) {
         return;
       }
-
-      const form = new FormData();
-      form.append('upload', this.file);
-
-      axios.post(
-        'http://localhost:8000/uploads',
-        form,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        },
-      );
+      imageService.uploadImage(this.file);
       this.file = null;
     },
   },
