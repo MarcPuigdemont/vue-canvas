@@ -1,65 +1,91 @@
-## Instructions
+# Intoduction
 
-You are required to implement a single page application that allows user to add text and image into canvas.
+I finished the test meeting all the requirements/features listed on the [REQUIREMENTS.md](REQUIREMENTS.md) file using a whole full day of work (with breaks to eat and a couple of interruptions). I took a bit of extra time to make sure everything is well documented on this file.
 
-## Features
+## Things taken into consideration
 
-Below are the basic features for the application:
+- I added some libraries, such as:
+    - bootstrap instead of the file
+    - bodyparser and cors for the server
+    - axios for the http request to the server
+    - rxjs for reactivity between server/components
+    - Typescript, I've used the object model, not the class model, but still we have types and interfaces for sanity
+    - cypress-mouse-position, probably is not needed but I couldn't make it work without it (didn't spent much time trying it witout them)
+    - cypress-file-upload, to test the ImageForm component
+- Performance:
+    - I used the event delegation on the drag functionality so it should support more items
+    - I used transform/translate vs top/left so the browser only needs to re-render the dragged item
+    - Only the current item is sent to the server when added/updated/removed so it should take less bandwith
 
-- user can see the existing images from folder `images` to the images list
-- user can *upload image* to folder `images` and directly added to images list
-- user can *add image / text* from the menu to the canvas
-- user can *move and delete the image / text* inside the canvas
-- the created objects on canvas can be saved and repopulated on refresh browser
+## Things I left out
 
-You may refer to Piktochart Editor page of how this test should look like.
+- More tests. I would love to have more time to better wrap it all up. I didn't have time to finish all the unit test needed and e2e/integration is pretty basic
+- E2E / Integration can only be run once, then you have to manually delete the uploaded image :(
+- RxJS for mouse events. I've seen it is very powerful to control streams of events, but since the requirements suggested to use native events, I didn't use them for this purpose.
+- I could have randomized the size and text of the new added items.
+- No time at all to implement resize item.
 
-## Resources
+# Architecture
 
-You will be given a HTML and CSS file with simple structure, and a server that allows you to upload and retrieve image. Instruction on how to run the server is included below.
+The app is based on some components. Each component has it's style scoped.
 
-## Requirements
+### Canvas
 
-Here are the expected requirements:
+[Here is](src/components/Canvas.vue) where the user can add, delete, and drag the items aroud.
 
-- App should have the features listed [above](#features)
+### CanvasItem
 
-- App should work on modern browsers (Chrome / Firefox)
+[It](src/components/CanvasItem.vue) represents each item on the canvas and it's resposibility is to update the dom element with the item model with things such as position, size, border depending on selected item. It is also responsible for instantiating the right Item Component, [CanvasItemImage](src/components/CanvasItemImage.vue)/[CanvasItemText](src/components/CanvasItemText.vue).
 
-- App logic and data flow are written in a functional and reactive programming concept
+### CanvasItemImage
 
-    Separate the logic between application data state and template view / user interactions (unidirectional data flow). 
+[It](src/components/CanvasItemImage.vue) will display the images stored on the model of the item
 
-- Use libraries as less as possible,
+### CanvasItemText
 
-    If you need to use libraries, we recommend vueJS (or any virtual DOM library), RxJS (or any streams library), Ramda (or any FP library).
-    Other than that, feel free to use other libraries that you're confident of.
-    For moving item inside the canvas, try your best to do it natively.
+[It](src/components/CanvasItemText.vue) will display the text stored on the model of the item
 
-    _note: use native HTML element `<div>` for editor canvas, not `<canvas>`_
+### Handler
 
-- Code and flow should be properly documented
+[It](src/components/Handler.vue) is a bounding box placed over the selected item with a button that allows to delete the item. If I had time, here is where resize handling boxes and logic would have gone.
 
-    Help us understand your flow easier by code comments or a readme file.
+### ImageForm
 
-- Build automated test for the app
+[It](src/components/ImageForm.vue) is used to upload new images. The logic of the form is here, but the one to actually upload the file is on the [imageService](src/utils/services.ts).
 
+### ImageList
 
-## How to Submit
+[Here](src/components/ImageList.vue) are displayed all the images from the /images folder
 
-- Zip your working folder with the name `<your name>-piktojstest`
+### TextAdd
 
-- Exclude `node_modules` folder from the zip
+[This](src/components/TextAdd.vue) is the compoent used to add text to the canvas. The text is always the same.
 
-- If you're using github or any code management tools, you can pass us the link
+### Utils
 
-- You have **one day** to complete the test. If you are not able to finish, do send us whatever you have done, we will evaluate accordingly. If you need more time to fulfill all the features and requirements, we can give you **an extra day**
+I have created a couple of [services](src/utils/services.ts) to link the server with the frontend using an RxJS Observable. These services also include the methods to add/update/delete items, and to upload new images.
 
-Have fun programming 😊
+# Server Architecture
 
-## How To Install
+I have followed the REST standard, this is the API:
 
-To set up the environment dependencies ( node version 5++ )
+- GET /items: returns all items
+- POST /items: used for testing, to reset the state before every run
+- POST /item: adds a new item
+- PUT /item ({ index, item}): modifies an existing item
+- DELETE /item: deletes an item
+- GET /images: returns all images from the /images folder
+- POST /uploads: adds a new image to the /images folder
+
+# Testing
+
+Unit testing is located inside [components folder/tests/unit](src/components/tests/unit) and there is a test file for almos each component. I didn't have time to test the [Handler](src/components/Handler.vue), the [ImageForm](src/components/ImageForm.vue) and [TextAdd](src/components/TextAdd.vue).
+
+E2E Testing is located inside [cypress/integration](cypress/integration/main.spec.ts) as it's generated automatically. There no specifica test files but one which tests the behavior of teh app.
+
+# How To Install and Develop
+
+To set up the environment dependencies
 
 ```
 $ npm install
@@ -68,27 +94,23 @@ $ npm install
 To run the node server
 
 ```
-$ npm run start
+$ npm run start-server
 ```
 
-Server is listening to port `8000`
-
-### API
-
-#### get uploaded images
+To run the client
 
 ```
-GET /images
+$ npm run start-client
 ```
 
-#### upload image to server
+To run unit tests
 
 ```
-POST /uploads
+$ npm run test:unit
 ```
 
-### Note
+To run e2e tests
 
-_- The name of the file input has to be `upload` as this is what the server will be reading from_
-_- The server only accepts `png` and `jpeg` file format_
-_- You are allowed to edit the server.js file_
+```
+$ npm run test:e2e
+```
