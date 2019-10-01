@@ -14,6 +14,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
+import axios from 'axios';
 
 interface IItemModel {
   text?: string;
@@ -32,17 +33,14 @@ interface IItem {
 export default Vue.extend({
   name: 'Canvas',
   data() {
-    const item: (x: number, y: number, w: number, h: number, type: string, model: IItemModel) => IItem =
-      (x, y, w, h, type, model) => ({ x, y, w, h, type, model });
-    const items = [
-      item(10, 10, 200, 40, 'TEXT', { text: 'This is a text'}),
-      item(30, 60, 120, 100, 'IMAGE', { url: 'http://localhost:8000/images/uploads-1462948453043.png' }),
-      item(100, 200, 100, 60, 'TEXT', { text: 'This is another text'}),
-      item(400, 50, 120, 180, 'IMAGE', { url: 'http://localhost:8000/images/uploads-1462948491987.png' }),
-    ];
     return {
-      items,
+      items: [],
     };
+  },
+  mounted() {
+    axios.get('http://localhost:8000/items').then((result) => {
+      this.items = result.data;
+    });
   },
   methods: {
     style(item: IItem) {
