@@ -19,7 +19,8 @@ I finished the test meeting all the requirements/features listed on the [REQUIRE
 
 ## Things I left out
 
-- More tests. I would love to have more time to better wrap it all up. I didn't have time to finish all the unit test needed and e2e/integration is pretty basic
+- Test, tests, and more tests. I take them really seriusly as they are the base of any sane project. I would love to have more time to better wrap it all up. I didn't have time to finish all the unit test needed and e2e/integration is pretty basic.
+- I didn't follow the TDD methodology but I didn't leave all the test for the last part. I did make them as I went.
 - E2E / Integration can only be run once, then you have to manually delete the uploaded image :(
 - RxJS for mouse events. I've seen it is very powerful to control streams of events, but since the requirements suggested to use native events, I didn't use them for this purpose.
 - I could have randomized the size and text of the new added items.
