@@ -30,7 +30,6 @@ export default Vue.extend({
         width: `${item.w}px`,
         height: `${item.h}px`,
         zIndex: this.selected ? 2 : 1,
-        border: this.selected ? 'solid 1px black' : 'solid 1px transparent',
       };
     },
     itemComponent() {
@@ -51,6 +50,7 @@ export default Vue.extend({
   position: absolute;
   box-sizing: content-box;
   cursor: move;
+  border: solid 1px transparent;
 }
 .item:hover {
   border: dashed 1px gray !important;

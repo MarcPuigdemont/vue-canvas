@@ -4,6 +4,7 @@ import { IItem } from '@/types/interfaces';
 
 const imageService = (() => {
   let imageSubscriber: any;
+
   const observable$ = Observable.create((subscriber: any) => {
     imageSubscriber = subscriber;
     axios.get('http://localhost:8000/images')
@@ -15,6 +16,7 @@ const imageService = (() => {
         subscriber.error(error);
       });
   });
+
   const uploadImage = (image: Blob) => {
     const form = new FormData();
     form.append('upload', image);
@@ -29,6 +31,7 @@ const imageService = (() => {
       imageSubscriber.next(response.data.file);
     });
   };
+
   return {
     subscribe: observable$.subscribe.bind(observable$),
     unsubscribe: () => {
@@ -40,6 +43,7 @@ const imageService = (() => {
 
 const itemService = (() => {
   let itemSubscriber: any;
+
   const observable$ = Observable.create((subscriber: any) => {
     itemSubscriber = subscriber;
     axios.get('http://localhost:8000/items')
@@ -51,6 +55,7 @@ const itemService = (() => {
         subscriber.error(error);
       });
   });
+
   const addItem = (type: string, value: string) => {
     const model = type === 'IMAGE' ? { url: value } : { text: value };
     const size = type === 'IMAGE' ? { w: 200, h: 200 } : { w: 200, h: 100 };
@@ -65,10 +70,15 @@ const itemService = (() => {
     itemSubscriber.next(item);
     axios.post('http://localhost:8000/item', item);
   };
+
   const updateItem = (index: number, item: IItem) => {
-    console.log({ index, item });
     axios.put('http://localhost:8000/item', { index, item });
-  }
+  };
+
+  const deleteItem = (index: number) => {
+    axios.delete('http://localhost:8000/item', { data: { index } });
+  };
+
   return {
     subscribe: observable$.subscribe.bind(observable$),
     unsubscribe: () => {
@@ -76,6 +86,7 @@ const itemService = (() => {
     },
     addItem,
     updateItem,
+    deleteItem,
   };
 })();
 

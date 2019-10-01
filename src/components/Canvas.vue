@@ -8,6 +8,7 @@
         :item="item"
         :selected="selectedItem === item"
       />
+      <Handler v-if="selectedItem" :item="selectedItem" @deleteItem="deleteItem"/>
     </div>
   </div>
 </template>
@@ -16,6 +17,7 @@ import Vue from 'vue';
 
 import { IItem, IMouseEvent, IPoint, MouseButton } from '../types/interfaces';
 import CanvasItem from './CanvasItem.vue';
+import Handler from './Handler.vue';
 
 import { itemService } from '../utils/services';
 
@@ -34,6 +36,7 @@ export default Vue.extend({
   name: 'Canvas',
   components: {
     CanvasItem,
+    Handler,
   },
   data() {
     const data: ICanvasData = {
@@ -124,6 +127,14 @@ export default Vue.extend({
         x: Math.max(0, Math.min(newPosition.x, canvasSize - 2 * canvasBorderWidth - item.w)),
         y: Math.max(0, Math.min(newPosition.y, canvasSize - 2 * canvasBorderWidth - item.h)),
       };
+    },
+    deleteItem() {
+      if (this.selectedItem !== null) {
+        const index = this.items.indexOf(this.selectedItem);
+        this.items = this.items.filter((item: IItem) => item !== this.selectedItem);
+        this.selectedItem = null;
+        itemService.deleteItem(index);
+      }
     },
   },
 });
