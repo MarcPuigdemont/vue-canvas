@@ -92,8 +92,13 @@ app.post('/item', (req, res) => {
 
 app.put('/item', (req, res) => {
   const { index, item } = req.body;
-  console.log({ index, item }, items);
   items[index] = item;
+  res.sendStatus(200);
+});
+
+app.delete('/item', (req, res) => {
+  const index = req.body.index;
+  items.splice(index, 1);
   res.sendStatus(200);
 });
 
