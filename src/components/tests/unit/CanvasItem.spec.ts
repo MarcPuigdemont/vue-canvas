@@ -15,15 +15,30 @@ describe('CanvasItem Component', () => {
     const wrapper = shallowMount(CanvasItem, {
       propsData: {
         item: mockItems[0],
+        selected: false,
       },
     });
-    const model = wrapper.vm as any;
+    let model = wrapper.vm as any;
     expect(model.style).toEqual({
       transform: 'translate(10px, 10px)',
       width: '200px',
       height: '40px',
+      border: 'solid 1px transparent',
+      zIndex: 1,
+    });
+    wrapper.setProps({
+      selected: true,
+    });
+    model = wrapper.vm as any;
+    expect(model.style).toEqual({
+      transform: 'translate(10px, 10px)',
+      width: '200px',
+      height: '40px',
+      border: 'solid 1px black',
+      zIndex: 2,
     });
   });
+
   it('computes the component properly', () => {
     let wrapper = shallowMount(CanvasItem, {
       propsData: {

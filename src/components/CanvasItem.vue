@@ -16,6 +16,9 @@ export default Vue.extend({
     item: {
       type: Object as () => IItem,
     },
+    selected: {
+      type: Boolean,
+    },
   },
   computed: {
     style() {
@@ -26,6 +29,8 @@ export default Vue.extend({
         transform: `translate(${item.x}px, ${item.y}px)`,
         width: `${item.w}px`,
         height: `${item.h}px`,
+        zIndex: this.selected ? 2 : 1,
+        border: this.selected ? 'solid 1px black' : 'solid 1px transparent',
       };
     },
     itemComponent() {
@@ -45,6 +50,9 @@ export default Vue.extend({
   display: block;
   position: absolute;
   box-sizing: content-box;
-  background-color: #ddd;
+  cursor: move;
+}
+.item:hover {
+  border: dashed 1px gray !important;
 }
 </style>
