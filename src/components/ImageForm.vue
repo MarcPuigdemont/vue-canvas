@@ -1,8 +1,8 @@
 <template>
   <div class="form">
     <h3>Form</h3>
-    <input type="file" class="form-control" placeholder="Upload Your Images" name="upload" @change="updateFile">
-    <button id="submit" class="btn btn-default" @click="uploadImage">upload</button>
+    <input type="file" class="form-control" placeholder="Upload Your Images" name="upload" @change="updateFile" data-cy="form-control">
+    <button id="submit" class="btn btn-default" @click="uploadImage" data-cy="upload-button">upload</button>
     <!-- Upload Form here -->
   </div>
 </template>

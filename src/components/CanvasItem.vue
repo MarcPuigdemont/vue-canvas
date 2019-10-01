@@ -1,5 +1,5 @@
 <template>
-  <div :style="style" class="item">
+  <div :style="style" class="item" data-cy="canvas-item">
     <component :is="itemComponent" :item="item" />
   </div>
 </template>

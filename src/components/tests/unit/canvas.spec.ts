@@ -24,7 +24,7 @@ describe('Canvas Component', () => {
     expect(axios.get).toBeCalled();
     wrapper.vm.$nextTick(() => {
       const model = wrapper.vm as any;
-      expect(model.items).toBe(mockItems);
+      expect(model.items).toEqual(mockItems);
       done();
     });
   });
@@ -74,7 +74,7 @@ describe('Canvas Component', () => {
       currentTarget: { childNodes: [ {}, item, {} ] },
       target: item,
     });
-    expect(selectedItem).toBe(mockItems[1]);
+    expect(selectedItem).toEqual(mockItems[1]);
   });
 
   it('computes the dragAnchorPoint and canvasOrigin properly', () => {
@@ -97,7 +97,7 @@ describe('Canvas Component', () => {
     expect(model.dragAnchorPoint).toEqual({ x: 4, y: 4 });
     expect(model.canvasOrigin).toEqual({ x: 1, y: 1 });
     expect(model.dragging).toBe(true);
-    expect(model.selectedItem).toBe(mockItems[0]);
+    expect(model.selectedItem).toEqual(mockItems[0]);
   });
 
   it('updates selected item position on drag', () => {

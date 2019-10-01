@@ -14,7 +14,7 @@ describe('ImageList Component', () => {
     expect(axios.get).toBeCalled();
     wrapper.vm.$nextTick(() => {
       const model = wrapper.vm as any;
-      expect(model.images).toBe(mockImages);
+      expect(model.images).toEqual(mockImages);
       done();
     });
   });

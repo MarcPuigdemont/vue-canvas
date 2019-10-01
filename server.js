@@ -74,7 +74,7 @@ app.get('/images', (req, res) => {
 
 const item = (x, y, w, h, type, model) => ({ x, y, w, h, type, model });
 const url = url => `http://localhost:8000/images/${url}`;
-const items = [
+let items = [
   item(10, 10, 200, 40, 'TEXT', { text: 'This is a text' }),
   item(30, 60, 120, 100, 'IMAGE', { url: url('uploads-1462948453043.png') }),
   item(100, 200, 100, 60, 'TEXT', { text: 'This is another text' }),
@@ -83,6 +83,11 @@ const items = [
 
 app.get('/items', (req, res) => {
   res.json(items);
+});
+
+app.post('/items', (req, res) => {
+  items = req.body;
+  res.sendStatus(200);
 });
 
 app.post('/item', (req, res) => {

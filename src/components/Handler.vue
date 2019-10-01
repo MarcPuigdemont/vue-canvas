@@ -1,6 +1,6 @@
 <template>
   <div class="handler" :style="style">
-    <div class="handler-delete" @mousedown="deleteItem"></div>
+    <div class="handler-delete" @mousedown="deleteItem" data-cy="handler-delete"></div>
   </div>
 </template>
 <script lang="ts">

@@ -3,7 +3,7 @@
     <h4>Images</h4>
     <ul class="list-unstyled">
       <!-- List of images here -->
-      <li v-for="(image, index) in images" :key="index" @click="addImageToCanvas(image)">
+      <li v-for="(image, index) in images" :key="index" @click="addImageToCanvas(image)" data-cy="image-list-item">
         <img :src="image" class="img-rounded" />
       </li>
     </ul>

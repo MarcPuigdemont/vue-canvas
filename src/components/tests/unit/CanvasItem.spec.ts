@@ -23,7 +23,6 @@ describe('CanvasItem Component', () => {
       transform: 'translate(10px, 10px)',
       width: '200px',
       height: '40px',
-      border: 'solid 1px transparent',
       zIndex: 1,
     });
     wrapper.setProps({
@@ -34,7 +33,6 @@ describe('CanvasItem Component', () => {
       transform: 'translate(10px, 10px)',
       width: '200px',
       height: '40px',
-      border: 'solid 1px black',
       zIndex: 2,
     });
   });
