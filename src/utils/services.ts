@@ -1,5 +1,5 @@
 import axios from 'axios';
-import rxjs from 'rxjs';
+import * as rxjs from 'rxjs';
 import { IItem } from '@/types/interfaces';
 
 // WARNING jest seems to have problems destructuring directly a mocked instance
