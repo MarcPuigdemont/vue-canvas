@@ -34,12 +34,10 @@ export default Vue.extend({
     },
     itemComponent() {
       const item = this.item as IItem;
-      if (item.type === 'TEXT') {
-        return CanvasItemText;
-      } else if (item.type === 'IMAGE') {
-        return CanvasItemImage;
+      if (item.type === 'IMAGE') {
+          return CanvasItemImage;
       }
-      return null;
+      return CanvasItemText;
     },
   },
 });

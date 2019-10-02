@@ -6,7 +6,9 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import { itemService } from '../utils/services';
+import * as services from '@/utils/services';
+// WARNING jest seems to have problems destructuring directly a mocked instance
+const { itemService } = services;
 
 export default Vue.extend({
   name: 'TextAdd',

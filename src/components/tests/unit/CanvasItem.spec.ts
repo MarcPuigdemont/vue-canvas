@@ -8,6 +8,7 @@ const url = (imageName: string) => `http://localhost:8000/images/${imageName}`;
 const mockItems = [
   item(10, 10, 200, 40, 'TEXT', { text: 'This is a text' }),
   item(30, 60, 120, 100, 'IMAGE', { url: url('uploads-1462948453043.png') }),
+  item(30, 60, 120, 100, 'ERROR', {}),
 ];
 
 describe('CanvasItem Component', () => {
