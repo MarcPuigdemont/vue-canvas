@@ -19,7 +19,9 @@ import { IItem, IMouseEvent, IPoint, MouseButton } from '../types/interfaces';
 import CanvasItem from './CanvasItem.vue';
 import Handler from './Handler.vue';
 
-import { itemService } from '../utils/services';
+import * as services from '@/utils/services';
+// WARNING jest seems to have problems destructuring directly a mocked instance
+const { itemService } = services;
 
 interface ICanvasData {
   items: IItem[];

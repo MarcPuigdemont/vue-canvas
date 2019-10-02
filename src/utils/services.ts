@@ -1,6 +1,9 @@
 import axios from 'axios';
-import { Observable } from 'rxjs';
+import rxjs from 'rxjs';
 import { IItem } from '@/types/interfaces';
+
+// WARNING jest seems to have problems destructuring directly a mocked instance
+const { Observable } = rxjs;
 
 const imageService = (() => {
   let imageSubscriber: any;

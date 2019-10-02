@@ -10,7 +10,9 @@
 import Vue from 'vue';
 import axios from 'axios';
 
-import { imageService } from '../utils/services';
+import * as services from '@/utils/services';
+// WARNING jest seems to have problems destructuring directly a mocked instance
+const { imageService } = services;
 
 interface IImageFormData {
   file: Blob | null;
