@@ -40,18 +40,19 @@ describe('imageService', () => {
   });
 
   /**
-   * There is an issue with how closure works on imageService. 
+   * There is an issue with how closure works on imageService.
    * I suspect copying a function with = may not preserve all variables
    * captured within it's scope by closure.
-   * 
+   *
    * Therefore, when executing uploadImage, on post.then imageSubscriber is undefined
    */
-  it.skip('will send form data to server and emit new image on upload image', (done) => {    
+  it.skip('will send form data to server and emit new image on upload image', (done) => {
     const originalFormData = global.FromData;
+    // tslint:disable-next-line
     global.FormData = function() {
       return {
         value: '',
-        append: function(_: any, item: any) {
+        append(_: any, item: any) {
           this.value = item;
         },
       };
@@ -61,7 +62,6 @@ describe('imageService', () => {
     mockRxjs.getObservableCreateFnCallback()(subscriber);
     setTimeout(() => {
       const a = new Blob(['image4']);
-      console.log(a.slice(0, 1));
       imageService.uploadImage(new Blob(['image4']));
       expect(mockAxios.post.mock.calls[0][0]).toBe('http://localhost:8000/uploads');
       expect(mockAxios.post.mock.calls[0][1].value).toBe('image4');

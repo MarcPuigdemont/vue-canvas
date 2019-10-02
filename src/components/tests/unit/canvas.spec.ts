@@ -47,7 +47,7 @@ describe('Canvas Component', () => {
   it('registers and unregisters document events', () => {
     global.document.addEventListener = jest.fn();
     global.document.removeEventListener = jest.fn();
-    
+
     const wrapper = mount(Canvas, { stubs });
     expect(global.document.addEventListener).toHaveBeenCalled();
     expect(global.document.addEventListener.mock.calls[0][0]).toBe('mouseup');

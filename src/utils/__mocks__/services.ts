@@ -1,5 +1,5 @@
-let imageServiceSubscriber: any = undefined; 
-let itemServiceSubscriber: any = undefined;
+let imageServiceSubscriber: any;
+let itemServiceSubscriber: any;
 
 const imageService = {
   subscribe: jest.fn().mockImplementation((subscriber) => {
@@ -24,4 +24,3 @@ export {
   imageService,
   itemService,
 };
-  

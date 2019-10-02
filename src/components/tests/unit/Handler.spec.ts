@@ -29,7 +29,7 @@ describe('Handler Component', () => {
     });
     const event = {
       stopPropagation: jest.fn(),
-    }
+    };
     expect(wrapper.emitted().deleteItem).toBeFalsy();
     wrapper.find('.handler-delete').trigger('mousedown', event);
     expect(wrapper.emitted().deleteItem).toBeTruthy();
