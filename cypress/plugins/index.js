@@ -25,5 +25,11 @@ module.exports = (on, config) => {
       axios.post(`http://localhost:8000/items`, items);
       return null;
     },
+    resetImages() {
+      const axios = require('axios');
+
+      axios.get(`http://localhost:8000/reset-images`);
+      return null;
+    },
   });
 };

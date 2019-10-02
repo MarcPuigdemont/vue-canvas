@@ -107,6 +107,26 @@ app.delete('/item', (req, res) => {
   res.sendStatus(200);
 });
 
+const initialImages = [
+  'uploads-1462948453043.png',
+  'uploads-1462948459604.png',
+  'uploads-1462948470584.png',
+  'uploads-1462948491987.png',
+  'uploads-1462948498227.png',
+];
+app.get('/reset-images', (req, res) => {
+  let files = fs.readdirSync('./images/');
+  try {
+    files
+      .filter(junk.not) // remove .DS_STORE etc
+      .filter(f => initialImages.indexOf(f) == -1)
+      .forEach(f => fs.unlinkSync('./images/' + f));
+    res.sendStatus(200);
+  } catch (e) {
+    res.sendStatus(500);
+  }
+});
+
 // general route # Modified to point to frontend instead of static file
 app.get('/', (req, res) => {
   res.redirect('http://localhost:8080');
